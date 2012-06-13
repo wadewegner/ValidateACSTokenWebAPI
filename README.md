@@ -5,7 +5,8 @@ Demonstrate how to validate an ACS token in an ASP.NET Web API service
 
 Special thanks to [@woloski](http://twitter.com/#!/woloski) for quickly (and ably) putting
 together the [SimpleWebToken](https://github.com/auth10/SimpleWebToken) library for
-parsing and validating simple web tokens.
+parsing and validating simple web tokens and [@vibronet](http://twitter.com/#!/vibronet) for 
+pointing me towards [ASP.NET Web API DelegatingHandler](http://bit.ly/LE8JQW).
 
 ## Usage
 
@@ -18,7 +19,7 @@ and replace "yourtokensigningkey" with your key from the Access Control Service:
 var validator = new SimpleWebTokenValidator 
 {
 	SharedKeyBase64 = "yourtokensigningkey"	
-}
+};
 ```
 
 2) Update [AccessControlResources.xaml](https://github.com/wadewegner/ValidateACSTokenWebAPI/blob/master/PhoneApp/Resources/AccessControlResources.xaml)
