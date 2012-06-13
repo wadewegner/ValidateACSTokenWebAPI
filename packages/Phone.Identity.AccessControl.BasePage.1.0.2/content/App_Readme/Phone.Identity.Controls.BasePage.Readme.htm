@@ -1,0 +1,130 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>ACS Control for Windows Phone</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link href="Content/Site.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <div class="page">
+        <header>
+            <div id="header">
+                <div id="title">
+                    <h1>
+                        ACS Control for Windows Phone</h1>
+                </div>
+                <div class="clear">
+                </div>
+            </div>
+        </header>
+        <section id="main">
+            <h2>
+                Introduction</h2>
+            <p>
+                The ACS Control for Window Phone allows your phone applications to outsource user
+                authentication to the Windows Azure Access Control Service (ACS). This service,
+                enables your users to log in by reusing their existing accounts from identity providers
+                such as Windows Live ID, Google, Yahoo, Facebook and possibly from their Active
+                Directory. If you want to know more about ACS, you can take a look at the dedicated
+                hands-on labs in the <a href="http://msdn.microsoft.com/gg271268">Windows Azure Platform
+                    Training Course</a>.
+            </p>
+            <p>
+                This package provides a Silverlight Control for Windows Phone to interact with ACS,
+                that you can include in your Windows Phone applications to take care of all the
+                runtime interactions with this service. Additionally, this package includes a base
+                log in page that uses this control and it is ready to be used in your phone application.
+                All that is left to do for you is to configure your ACS namespace via its handy
+                management portal (like specifying your preferences such as the identity providers
+                you want to enable in your relying party), and integrate the log in page into your
+                existing Windows Phone application.
+            </p>
+            <!------------------------------------------>
+            <h3>
+                Prerequisites</h3>
+            <ul>
+                <li><a href="http://www.nuget.org/">NuGet 1.5 or above</a></li>
+                <li><a href="http://www.microsoft.com/download/en/details.aspx?id=27570">Windows Phone
+                    SDK 7.1 (RTW)</a></li>
+            </ul>
+            <!------------------------------------------>
+            <h2>
+                Configuration</h2>
+            <h3>
+                Configuring your ACS namespace settings</h3>
+            <ol>
+                <li>First of all, make sure to have a Windows Azure Access Control Service (ACS) namespace
+                    with a fully configured Relying Party Application to receive a Simple Web Token
+                    (SWT).</li>
+                <li>After that, you need to configure your ACS namespace settings so they can be used
+                    by the control. To do this, go to the <strong>Resources</strong> folder and open
+                    the <strong>AccessControlResources.xaml</strong> file.</li>
+                <li>In this file, replace the <strong>youracsnamespace</strong> and <strong>yourrealm</strong>
+                    placeholders with your <strong>ACS namespace</strong> and your <strong>Relying Party
+                        realm</strong> respectively.</li>
+                <br />
+                <img src="Content/LoginPage-ACSResources.png" title="Configuring the AccessControlResources.xaml resources file" />
+            </ol>
+            <!------------------------------------------>
+            <h3>
+                Integrating the base log in page 
+                with your Windows Phone application</h3>
+                <p>This package includes a base log in page that uses the ACS Control for Windows Phone
+                    to allow users to authenticate using their favorite identity provider. In order to integrate this page with your Windows Phone 
+                    application navigation flow review the following steps.</p>
+                <p><strong>Important:</strong> Take into account when designing the navigation logic and flow of your Windows Phone application,
+                that pressing the device's <strong>Back</strong> button from the first screen of your application <strong>must</strong> close the application.
+                Otherwise, your application will not be accepted in the Windows Phone Marketplace.</p>
+            <ol>
+                <li>Make sure to link to the <strong>/Pages/LoginPage.xaml</strong> page from an existing page in your application, or, alternately, 
+                set it as the default page for your application in the <strong>WMAppManifest.xml</strong> file as is shown in the following image.</li>
+                <br />
+                <img src="Content/LoginPage-WMAppManifest.png" title="Setting the log in page as default in the WMAppManifest.xml file" /><br />
+                <br />
+                <li>Once the page is included in your navigation flow, you need to replace the <strong>TODO</strong>
+                    comments in the <strong>Pages/LoginPage.xaml.cs</strong> file with your application
+                    navigation logic. In the following picture, for example, you can see how to navigate
+                    to another page only when the user is correctly authenticated.</li>
+                <br />
+                <img src="Content/LoginPage-Navigation.png" title="Adding navigation logic" />
+            </ol>
+            <!------------------------------------------>
+            <h2>
+                Handling the token returned by the Identity Providers</h2>
+            <ol>
+                <li>The ACS Control for Window Phone automatically saves the Simple Web Token obtained
+                    from the selected identity provider to the phone&#39;s Isolated Storage and makes
+                    it available to your application as an application resource called <strong>swtStore</strong>.</li>
+                <li>The only claim type supported out-of-the-box for all the built-team identity provides in Windows Azure
+                    Access Control Service is the <strong>NameIdentifier</strong>. To access the authenticated users'
+                    NameIdentifier claim value, you can use the following snippet.</li>
+                <pre class="code">
+var simpleWebTokenStore = Application.Current.Resources["swtStore"] as SimpleWebTokenStore;
+
+var userNameIdentifier = <strong>simpleWebTokenStore.SimpleWebToken.NameIdentifier</strong>;
+</pre>
+                <li>To access the rest of the user's claims, you can query
+                    the <strong>Claims</strong> dictionary of the <strong>SimpleWebToken</strong> 
+                    class, and extract the ones you require. For
+                    instance, to access the value of the <strong>Name</strong> claim type, you can use the following snippet.</li>
+                <pre class="code">
+var simpleWebTokenStore = Application.Current.Resources["swtStore"] as SimpleWebTokenStore;
+
+var name = <strong>simpleWebTokenStore.SimpleWebToken.Claims[ClaimTypes.Name];</strong></pre>
+            </ol>
+            <!------------------------------------------>
+            <h3>
+                Additional information</h3>
+            <ul>
+                <li><a href="http://msdn.microsoft.com/en-us/wazplatformtrainingcourse_acsandwindowsphone7_topic2">
+                    Authenticating Users via ACS and invoking via OAuth2 an OData Service in a Windows
+                    Phone 7 app</a></li>
+                <li><a href="http://msdn.microsoft.com/en-us/library/windowsazure/gg429786.aspx">Access
+                    Control Service 2.0</a></li>
+            </ul>
+            <!------------------------------------------>
+        </section>
+    </div>
+</body>
+</html>
