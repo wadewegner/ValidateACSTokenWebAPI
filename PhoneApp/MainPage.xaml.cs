@@ -36,7 +36,7 @@ namespace PhoneApp
             new Uri(url));
 
                 request.Accept = "application/json";
-                request.Headers["Authorization"] = simpleWebTokenStore.SimpleWebToken.RawToken;
+                request.Headers["Authorization"] = "OAuth " + simpleWebTokenStore.SimpleWebToken.RawToken;
 
                 request.BeginGetResponse(r =>
                 {
