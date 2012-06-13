@@ -1,7 +1,7 @@
 ValidateACSTokenWebAPI
 ======================
 
-Demonstrate how to validate an ACS token in an ASP.NET Web API service
+Demonstrate how to validate an ACS token in an ASP.NET Web API service.
 
 Special thanks to [@woloski](http://twitter.com/#!/woloski) for quickly (and ably) putting
 together the [SimpleWebToken](https://github.com/auth10/SimpleWebToken) library for
